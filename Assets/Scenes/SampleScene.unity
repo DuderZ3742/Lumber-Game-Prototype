@@ -898,7 +898,7 @@ GameObject:
   - component: {fileID: 745911167}
   - component: {fileID: 745911166}
   - component: {fileID: 745911165}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1812,6 +1812,7 @@ GameObject:
   - component: {fileID: 1563998882}
   - component: {fileID: 1563998887}
   - component: {fileID: 1563998886}
+  - component: {fileID: 1563998888}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1953,6 +1954,23 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &1563998888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563998881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6056819546b98b141b13eba006d53291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 330585545}
+  rotationSpeed: 10
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!1001 &1656163765
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2172,7 +2190,7 @@ Transform:
   m_GameObject: {fileID: 1894929432}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2227,7 +2245,7 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: 978d46cdda5c34f449cb3bdeaa2142a3,
     type: 3}
   attackPoint: {fileID: 1894929433}
-  attackRange: 3
+  attackRadius: 0.5
   axeDamage: 10
   treeLayer:
     serializedVersion: 2

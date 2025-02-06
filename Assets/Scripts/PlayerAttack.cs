@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour {
 
     [Header("Attack Settings")]
     [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackRange = 2f;
+    [SerializeField] private float attackRadius = 0.5f;
     [SerializeField] private int axeDamage = 10;
     [SerializeField] private LayerMask treeLayer;
 
@@ -45,17 +45,14 @@ public class PlayerAttack : MonoBehaviour {
             animator.SetTrigger("Attack");
             StartCoroutine(AttackCooldown());
         }
-
-        ShowRaycast();
     }
 
     public void HitTree() {
-        RaycastHit hit;
-        if (Physics.Raycast(attackPoint.position, attackPoint.up, out hit, attackRange, treeLayer)) {
-            Tree tree = hit.collider.GetComponent<Tree>();
-            if (tree != null) {
-                tree.TakeDamage(axeDamage);
-            }
+        Collider[] hitTrees = Physics.OverlapSphere(attackPoint.position, attackRadius, treeLayer);
+
+        foreach (Collider tree in hitTrees) {
+            Debug.Log("Hit" + tree.name);
+            tree.GetComponent<Tree>()?.TakeDamage(axeDamage);
         }
     }
 
@@ -65,13 +62,8 @@ public class PlayerAttack : MonoBehaviour {
         canAttack = true;
     }
 
-    private void ShowRaycast() {
-        RaycastHit hit;
-        if (Physics.Raycast(attackPoint.position, attackPoint.up, out hit, attackRange, treeLayer)) {
-            Debug.DrawLine(attackPoint.position, hit.point, Color.red);
-        }
-        else {
-            Debug.DrawRay(attackPoint.position, attackPoint.up * attackRange, Color.green);
-        }
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 }

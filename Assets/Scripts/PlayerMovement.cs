@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour {
     [Header("Input Settings")]
     [SerializeField] private InputActionAsset inputActionAsset;
     private InputAction moveAction;
-
     private Vector3 input;
 
     [Header("Movement Settings")]
