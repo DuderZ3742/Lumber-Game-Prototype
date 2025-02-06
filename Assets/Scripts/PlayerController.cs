@@ -5,12 +5,12 @@ public class PlayerController : MonoBehaviour {
     [Header("Input Settings")]
     [SerializeField] private InputActionAsset inputActionAsset;
     private InputAction moveAction;
+
     private Vector3 input;
 
     [Header("Movement Settings")]
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float turnSpeed = 360;
+    [SerializeField] private float moveSpeed = 5f;
 
     private void OnEnable() {
         if (inputActionAsset != null) {
@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour {
 
     void Update() {
         GatherInput(moveAction.ReadValue<Vector2>());
-        Look();
     }
 
     void FixedUpdate() {
@@ -35,23 +34,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     void GatherInput(Vector2 moveInput) {
-        input = new Vector3(moveInput.x, 0, moveInput.y);
-
-        if (input.magnitude > 1f) {
-            input.Normalize();
-        }
-    }
-
-    void Look() {
-        if (input != Vector3.zero) {
-            var relative = (transform.position + input.ToIso()) - transform.position;
-            var rot = Quaternion.LookRotation(relative, Vector3.up);
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, turnSpeed * Time.deltaTime);
-        }
+        input = new Vector3(moveInput.x, 0, moveInput.y) * moveSpeed;
     }
 
     void Move() {
-        rb.MovePosition(transform.position + (transform.forward * input.magnitude) * speed * Time.deltaTime);
+        var relative = (transform.position + input.ToIsometric()) - transform.position;
+        rb.MovePosition(rb.position + relative * Time.fixedDeltaTime);
     }
 }
