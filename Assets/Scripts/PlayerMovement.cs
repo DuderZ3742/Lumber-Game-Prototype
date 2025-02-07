@@ -5,7 +5,8 @@ public class PlayerMovement : MonoBehaviour {
     [Header("Input Settings")]
     [SerializeField] private InputActionAsset inputActionAsset;
     private InputAction moveAction;
-    private Vector3 input;
+    private Vector3 baseInput;
+    private Vector3 isometricInput;
 
     [Header("Movement Settings")]
     [SerializeField] private Rigidbody rb;
@@ -33,11 +34,11 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     void GatherInput(Vector2 moveInput) {
-        input = new Vector3(moveInput.x, 0, moveInput.y) * moveSpeed;
+        baseInput = new Vector3(moveInput.x, 0, moveInput.y) * moveSpeed;
+        isometricInput = (transform.position + baseInput.ToIsometric()) - transform.position;
     }
 
     void Move() {
-        var relative = (transform.position + input.ToIsometric()) - transform.position;
-        rb.MovePosition(rb.position + relative * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + isometricInput * Time.deltaTime);
     }
 }
